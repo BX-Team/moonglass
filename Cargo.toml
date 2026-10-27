@@ -1,0 +1,18 @@
+[package]
+name = "moonglass"
+version = "0.1.0"
+description = "BX Team's design system for gpui: themes, window chrome and components on GPUI Kit"
+authors = ["BX Team"]
+edition = "2024"
+rust-version = "1.95"
+license = "GPL-3.0-or-later"
+homepage = "https://github.com/BX-Team/moonglass"
+repository = "https://github.com/BX-Team/moonglass"
+readme = "README.md"
+keywords = ["gpui", "ui", "design-system", "theme"]
+categories = ["gui"]
+include = ["src/**", "assets/**", "examples/**", "README.md", "LICENSE"]
+
+[dependencies]
+gpui-kit = { version = "0.8.1", default-features = false }
+tracing = "0.1"

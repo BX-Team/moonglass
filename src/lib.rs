@@ -19,6 +19,9 @@ pub mod toast;
 
 pub use gpui_kit;
 
+/// This crate's version, for an About page.
+pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 pub use assets::Assets;
 pub use button::{Button, ButtonSize};
 pub use chip::{Tone, chip, meter};

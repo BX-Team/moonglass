@@ -18,6 +18,7 @@ pub struct Tabs {
     id: ElementId,
     labels: Vec<SharedString>,
     selected: usize,
+    fill: bool,
     on_select: OnSelect,
 }
 
@@ -32,8 +33,15 @@ impl Tabs {
             id: id.into(),
             labels,
             selected,
+            fill: false,
             on_select: Rc::new(on_select),
         }
+    }
+
+    /// Stretches the tabs to share the full width, as a segmented control.
+    pub fn fill(mut self) -> Self {
+        self.fill = true;
+        self
     }
 }
 
@@ -69,6 +77,7 @@ impl RenderOnce for Tabs {
                     .h(px(28.))
                     .line_height(relative(1.4))
                     .px(px(12.))
+                    .when(self.fill, |b| b.flex_1().justify_center())
                     .rounded(px(6.))
                     .cursor_pointer()
                     .text_color(fg)
@@ -81,9 +90,10 @@ impl RenderOnce for Tabs {
         div()
             .id(self.id)
             .role(Role::TabList)
+            .when(self.fill, |d| d.w_full())
             .child(motion::highlighted(
                 &key,
-                h_flex().gap(px(2.)),
+                h_flex().gap(px(2.)).when(self.fill, |row| row.w_full()),
                 tabs,
                 Some(self.selected),
                 |d| d.rounded(px(6.)).bg(c.sel),

@@ -3099,7 +3099,7 @@ dependencies = [
 
 [[package]]
 name = "moonglass"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "gpui-kit",
  "tracing",

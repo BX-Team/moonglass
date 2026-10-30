@@ -83,6 +83,7 @@ impl RenderOnce for TitleBar {
         let drag = window.use_state(cx, |_, _| Drag { pressed: false });
         let mac = cfg!(target_os = "macos");
         let on_close = self.on_close;
+        let has_actions = self.actions.is_some();
         h_flex()
             .id("title-bar")
             .flex_none()
@@ -143,26 +144,28 @@ impl RenderOnce for TitleBar {
                 let controls = window.window_controls();
                 let maximized = window.is_maximized();
                 let linux = cfg!(target_os = "linux");
-                bar.child(div().w(px(1.)).h(px(20.)).mr(px(4.)).bg(c.border))
-                    .when(!linux || controls.minimize, |b| {
-                        b.child(control(Control::Minimize, c.text2, c.row, None, window, cx))
-                    })
-                    .when(!linux || controls.maximize, |b| {
-                        let kind = if maximized {
-                            Control::Restore
-                        } else {
-                            Control::Maximize
-                        };
-                        b.child(control(kind, c.text2, c.row, None, window, cx))
-                    })
-                    .child(control(
-                        Control::Close,
-                        c.text2,
-                        crate::theme::danger(),
-                        on_close,
-                        window,
-                        cx,
-                    ))
+                bar.when(has_actions, |b| {
+                    b.child(div().w(px(1.)).h(px(20.)).mr(px(4.)).bg(c.border))
+                })
+                .when(!linux || controls.minimize, |b| {
+                    b.child(control(Control::Minimize, c.text2, c.row, None, window, cx))
+                })
+                .when(!linux || controls.maximize, |b| {
+                    let kind = if maximized {
+                        Control::Restore
+                    } else {
+                        Control::Maximize
+                    };
+                    b.child(control(kind, c.text2, c.row, None, window, cx))
+                })
+                .child(control(
+                    Control::Close,
+                    c.text2,
+                    crate::theme::danger(),
+                    on_close,
+                    window,
+                    cx,
+                ))
             })
     }
 }

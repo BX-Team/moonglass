@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::time::Duration;
 
-use gpui_kit::{App, ClipboardItem, Context, EntityId, Global, SharedString};
+use gpui::{App, ClipboardItem, Context, EntityId, Global, SharedString};
 
 use super::{Button, IconName};
 

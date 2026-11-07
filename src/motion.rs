@@ -1,12 +1,12 @@
 use std::time::{Duration, Instant};
 
-use gpui_kit::base::{Interpolate, Presence, PresencePhase, Transition, transition};
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     Animation, AnimationExt as _, AnyElement, App, Bounds, Div, ElementId, Entity, EntityId,
     IntoElement, ParentElement as _, Pixels, SharedString, StatefulInteractiveElement, Styled, Svg,
     Transformation, Window, div, ease_out_quint, percentage, px,
 };
+use gpui_base::{Interpolate, Presence, PresencePhase, Transition, transition};
 
 use crate::theme;
 
@@ -168,7 +168,7 @@ pub fn turn(id: &str, turn: u64, icon: Svg, cx: &App) -> AnyElement {
     }
     icon.with_animation(
         ElementId::NamedInteger(SharedString::from(format!("{id}:turn")), turn),
-        Animation::new(Duration::from_millis(600)).with_easing(gpui_kit::ease_in_out),
+        Animation::new(Duration::from_millis(600)).with_easing(gpui::ease_in_out),
         |svg, t| svg.with_transformation(Transformation::rotate(percentage(t))),
     )
     .into_any_element()

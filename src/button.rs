@@ -1,10 +1,10 @@
-use gpui_kit::base::{Selectable, StyledExt as _};
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     AnyElement, App, ClickEvent, ElementId, FontWeight, InteractiveElement as _, IntoElement,
     ParentElement, RenderOnce, SharedString, StatefulInteractiveElement as _, StyleRefinement,
     Styled, Window, div, px, relative,
 };
+use gpui_base::{Selectable, StyledExt as _};
 
 use super::{IconName, W_HEAVY, icon, motion, tooltip};
 use crate::theme::ActiveTheme as _;
@@ -63,7 +63,7 @@ type ClickHandler = Box<dyn Fn(&ClickEvent, &mut Window, &mut App)>;
 #[derive(IntoElement)]
 pub struct Button {
     id: ElementId,
-    base: gpui_kit::base::Button,
+    base: gpui_base::Button,
     style: StyleRefinement,
     variant: Variant,
     size: ButtonSize,
@@ -81,7 +81,7 @@ impl Button {
     pub fn new(id: impl Into<ElementId>) -> Self {
         let id = id.into();
         Self {
-            base: gpui_kit::base::Button::new(id.clone()),
+            base: gpui_base::Button::new(id.clone()),
             id,
             style: StyleRefinement::default(),
             variant: Variant::Outline,
@@ -192,7 +192,7 @@ impl RenderOnce for Button {
         let hovered = hover.on && enabled;
         let fg = match self.variant {
             Variant::Primary => c.on_accent,
-            Variant::Danger => gpui_kit::white(),
+            Variant::Danger => gpui::white(),
             _ if self.selected || hovered => c.text,
             Variant::Outline if !square => c.text,
             _ => c.muted,

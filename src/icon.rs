@@ -1,4 +1,4 @@
-use gpui_kit::{Hsla, Styled as _, Svg, px, svg};
+use gpui::{Hsla, Styled as _, Svg, px, svg};
 
 /// An icon drawn for the design; `Custom` points at an svg in the app's own assets.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

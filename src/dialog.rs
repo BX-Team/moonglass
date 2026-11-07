@@ -1,10 +1,10 @@
 use std::rc::Rc;
 
-use gpui_kit::base::{Dialog, DialogPopup, box_shadow};
-use gpui_kit::{
+use gpui::{
     AnyElement, AnyView, App, FocusHandle, IntoElement, ParentElement as _, Pixels, Styled as _,
     Window, div, hsla, px,
 };
+use gpui_base::{Dialog, DialogPopup, box_shadow};
 
 use super::{UiText as _, motion};
 use crate::theme::ActiveTheme as _;

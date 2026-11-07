@@ -1,5 +1,5 @@
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     AnyElement, App, Div, IntoElement, ParentElement as _, RenderOnce, SharedString, Styled as _,
     Window, div, px, relative,
 };

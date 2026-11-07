@@ -1,8 +1,8 @@
-use gpui_kit::base::{ScrollbarMode, ScrollbarStyles, ScrollbarTheme, ThemeAppearance};
+use gpui_base::{ScrollbarMode, ScrollbarStyles, ScrollbarTheme, ThemeAppearance};
 use std::time::{Duration, Instant};
 
-use gpui_kit::base::Interpolate;
-use gpui_kit::{App, Global, Hsla, Rgba, SharedString, Window, WindowAppearance, rgb};
+use gpui::{App, Global, Hsla, Rgba, SharedString, Window, WindowAppearance, rgb};
+use gpui_base::Interpolate;
 
 /// The twelve colors every theme defines.
 #[derive(Debug, Clone, Copy)]
@@ -304,7 +304,7 @@ pub fn apply(mode: ThemeMode, dark: &str, light: &str, window: Option<&mut Windo
 
 /// The red of destructive buttons and the window's close button, the same in every theme.
 pub fn danger() -> Hsla {
-    gpui_kit::hsla(355. / 360., 0.72, 0.52, 1.)
+    gpui::hsla(355. / 360., 0.72, 0.52, 1.)
 }
 
 /// Whether the palette is changing; transitions jump straight to their targets meanwhile.
@@ -333,7 +333,7 @@ pub fn tick(window: &mut Window, cx: &mut App) {
 
 /// gpui-base paints carets, selections, placeholders and scrollbars from its own tokens.
 fn sync_base(c: &Palette, dark: bool, cx: &mut App) {
-    let base = gpui_kit::base::Theme::global_mut(cx);
+    let base = gpui_base::Theme::global_mut(cx);
     base.appearance = if dark {
         ThemeAppearance::Dark
     } else {
@@ -362,8 +362,8 @@ fn sync_base(c: &Palette, dark: bool, cx: &mut App) {
             ScrollbarStyles::default()
                 .thumb(|s| {
                     s.bg(c.muted.opacity(0.35))
-                        .width(gpui_kit::px(6.))
-                        .radius(gpui_kit::px(3.))
+                        .width(gpui::px(6.))
+                        .radius(gpui::px(3.))
                 })
                 .thumb_hover(|s| s.bg(c.muted.opacity(0.6))),
         );

@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use gpui_kit::{
+use gpui::{
     AnyElement, App, InteractiveElement as _, IntoElement, ParentElement as _, Pixels, Point,
     Styled as _, Window, anchored, deferred, div, point, px,
 };

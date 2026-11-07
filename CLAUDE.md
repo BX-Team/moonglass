@@ -1,6 +1,6 @@
 # moonglass
 
-BX Team's gpui design system on GPUI Kit (`gpui-kit`, `default-features = false`). Used by Riven and Nyx; anything app-specific (routes, state, i18n) stays in the apps.
+BX Team's gpui design system on gpui (`gpui-pre`, pinned with `=`) and GPUI Base (`gpui-base`); no GPUI Kit. The platform crates come along so apps get `application`, `init` and `open_window` from here. Used by Riven and Nyx; anything app-specific (routes, state, i18n) stays in the apps.
 
 ## Commands
 

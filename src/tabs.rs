@@ -1,7 +1,7 @@
 use std::rc::Rc;
 
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     AnyElement, App, ElementId, FontWeight, InteractiveElement as _, IntoElement,
     ParentElement as _, RenderOnce, Role, SharedString, StatefulInteractiveElement as _,
     Styled as _, Window, div, px, relative,
@@ -69,7 +69,7 @@ impl RenderOnce for Tabs {
                     cx,
                 );
                 hover
-                    .track(gpui_kit::base::Button::new(SharedString::from(format!(
+                    .track(gpui_base::Button::new(SharedString::from(format!(
                         "tab-{i}"
                     ))))
                     .role(Role::Tab)

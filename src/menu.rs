@@ -1,13 +1,13 @@
 use std::rc::Rc;
 
-use gpui_kit::base::input::InputState;
-use gpui_kit::base::{Popover, box_shadow};
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     Anchor, App, ElementId, Entity, InteractiveElement as _, IntoElement, ParentElement as _,
     Pixels, RenderOnce, SharedString, StatefulInteractiveElement as _, Styled as _, Window, div,
     hsla, px,
 };
+use gpui_base::input::InputState;
+use gpui_base::{Popover, box_shadow};
 
 use super::{Button, IconName, TextField, UiText as _, h_flex, icon, motion, v_flex};
 use crate::theme::ActiveTheme as _;
@@ -304,7 +304,7 @@ pub fn menu_panel(
     dismiss: OnAction,
     window: &mut Window,
     cx: &mut App,
-) -> gpui_kit::Div {
+) -> gpui::Div {
     let c = cx.theme().colors;
     let rows: Vec<_> = entries
         .iter()

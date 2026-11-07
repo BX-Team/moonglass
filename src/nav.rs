@@ -1,5 +1,5 @@
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     App, Div, FontWeight, ParentElement as _, SharedString, Styled as _, Window, div, px, relative,
 };
 
@@ -8,13 +8,13 @@ use crate::{IconName, W_SEMIBOLD, icon, motion, v_flex};
 
 /// A 30 px sidebar row that tints under the pointer; the selection pill is drawn by the list.
 pub fn nav_row(
-    id: impl Into<gpui_kit::ElementId>,
+    id: impl Into<gpui::ElementId>,
     active: bool,
     window: &mut Window,
     cx: &mut App,
-) -> gpui_kit::base::Button {
+) -> gpui_base::Button {
     let c = cx.theme().colors;
-    let id: gpui_kit::ElementId = id.into();
+    let id: gpui::ElementId = id.into();
     let key = format!("nav:{id}");
     let hover = motion::hover(SharedString::from(format!("{key}:hover")), window, cx);
     let bg = motion::animate(
@@ -28,7 +28,7 @@ pub fn nav_row(
         cx,
     );
     hover
-        .track(gpui_kit::base::Button::new(id))
+        .track(gpui_base::Button::new(id))
         .selected(active)
         .justify_start()
         .h(px(30.))

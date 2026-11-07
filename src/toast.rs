@@ -1,11 +1,11 @@
 use std::time::Duration;
 
-use gpui_kit::base::box_shadow;
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     AnyElement, App, ClipboardItem, Global, InteractiveElement as _, IntoElement,
     ParentElement as _, SharedString, Styled as _, Window, div, hsla, px, relative,
 };
+use gpui_base::box_shadow;
 
 use crate::theme::ActiveTheme as _;
 use crate::{Button, ButtonSize, IconName, UiText as _, h_flex, icon, motion, v_flex};

@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use gpui_kit::{AssetSource, Result, SharedString};
+use gpui::{AssetSource, Result, SharedString};
 
 macro_rules! icons {
     ($($name:literal),* $(,)?) => {

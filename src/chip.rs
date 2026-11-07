@@ -1,4 +1,4 @@
-use gpui_kit::{App, Div, Hsla, ParentElement as _, SharedString, Styled as _, div, px, relative};
+use gpui::{App, Div, Hsla, ParentElement as _, SharedString, Styled as _, div, px, relative};
 
 use crate::theme::ActiveTheme as _;
 

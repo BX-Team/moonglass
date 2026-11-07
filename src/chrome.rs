@@ -1,5 +1,5 @@
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     AnyElement, App, Context, CursorStyle, Decorations, FontWeight, Hsla, InteractiveElement as _,
     IntoElement, MouseButton, ParentElement as _, Render, RenderOnce, ResizeEdge, SharedString,
     StatefulInteractiveElement as _, Styled as _, TitlebarOptions, Window, WindowControlArea,
@@ -128,7 +128,7 @@ impl RenderOnce for TitleBar {
                     })
                     .gap(px(8.))
                     .when_some(self.logo, |d, logo| {
-                        d.child(gpui_kit::img(logo).size(px(20.)).flex_none())
+                        d.child(gpui::img(logo).size(px(20.)).flex_none())
                     })
                     .child(
                         div()

@@ -1,10 +1,10 @@
-use gpui_kit::base::StyledExt as _;
-use gpui_kit::base::input::{Input, InputState, Textarea, TextareaState};
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     App, Entity, Focusable as _, InteractiveElement as _, IntoElement, MouseButton,
     ParentElement as _, RenderOnce, StyleRefinement, Styled, Window, div, px,
 };
+use gpui_base::StyledExt as _;
+use gpui_base::input::{Input, InputState, Textarea, TextareaState};
 
 use super::{Button, ButtonSize, IconName, h_flex, icon, motion};
 use crate::theme::ActiveTheme as _;
@@ -181,7 +181,7 @@ pub fn textarea(
     window: &mut Window,
     cx: &mut App,
 ) -> Entity<TextareaState> {
-    use gpui_kit::AppContext as _;
+    use gpui::AppContext as _;
     cx.new(|cx| {
         TextareaState::new(window, cx)
             .auto_grow(min, max)

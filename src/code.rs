@@ -1,13 +1,13 @@
 use std::ops::Range;
 use std::sync::Arc;
 
-use gpui_kit::base::input::{
-    Editor, EditorState, FoldRange, HighlightStyleResolver, InputEdit, InputEditorStyle,
-    InputHighlighter, InputHighlighterFactory, Rope,
-};
-use gpui_kit::{
+use gpui::{
     App, AppContext as _, Context, Entity, FontWeight, HighlightStyle, Hsla, IntoElement,
     ParentElement as _, RenderOnce, SharedString, Styled as _, Window, div, px,
+};
+use gpui_base::input::{
+    Editor, EditorState, FoldRange, HighlightStyleResolver, InputEdit, InputEditorStyle,
+    InputHighlighter, InputHighlighterFactory, Rope,
 };
 
 use crate::theme::{ActiveTheme as _, Palette};
@@ -223,7 +223,7 @@ impl InputHighlighter for ConfigHighlighter {
         text: &Rope,
         _: bool,
         _: &mut Window,
-        _: &mut Context<gpui_kit::base::input::EditorState>,
+        _: &mut Context<gpui_base::input::EditorState>,
     ) {
         self.tokens = lex(&text.to_string(), self.flavor);
     }
@@ -298,7 +298,7 @@ impl HighlightStyleResolver for ThemeStyles {
         };
         Some(match name {
             "comment" => HighlightStyle {
-                font_style: Some(gpui_kit::FontStyle::Italic),
+                font_style: Some(gpui::FontStyle::Italic),
                 ..color(self.comment)
             },
             "string" => color(self.string),

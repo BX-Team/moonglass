@@ -1,7 +1,7 @@
 use std::rc::Rc;
 
-use gpui_kit::prelude::FluentBuilder as _;
-use gpui_kit::{
+use gpui::prelude::FluentBuilder as _;
+use gpui::{
     App, ElementId, InteractiveElement as _, IntoElement, ParentElement as _, RenderOnce,
     SharedString, Styled as _, Window, div, px,
 };
@@ -69,7 +69,7 @@ impl RenderOnce for Switch {
         let (w, h) = if self.large { (44., 24.) } else { (40., 22.) };
         let knob = h - 4.;
         let key = format!("switch:{}", self.id);
-        let mut anim = |part: &str, on_value: gpui_kit::Hsla, off_value: gpui_kit::Hsla| {
+        let mut anim = |part: &str, on_value: gpui::Hsla, off_value: gpui::Hsla| {
             motion::animate(
                 SharedString::from(format!("{key}:{part}")),
                 if on { on_value } else { off_value },
@@ -101,7 +101,7 @@ impl RenderOnce for Switch {
                     .bg(knob_bg),
             );
         let on_change = self.on_change.filter(|_| !self.disabled);
-        gpui_kit::base::Switch::new(self.id)
+        gpui_base::Switch::new(self.id)
             .checked(on)
             .when_some(self.accessible.or(self.label.clone()), |s, name| {
                 s.accessibility_label(name)

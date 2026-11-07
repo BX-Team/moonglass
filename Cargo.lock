@@ -1814,19 +1814,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "gpui-kit"
-version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c464934b5cdb85dd3fc511e60d09fb446fba422de159a80038368f52893c14b"
-dependencies = [
- "gpui-base",
- "gpui-pre",
- "gpui-pre-macros",
- "gpui-pre-platform",
- "gpui-pre-web",
-]
-
-[[package]]
 name = "gpui-pre"
 version = "0.3.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3130,9 +3117,12 @@ dependencies = [
 
 [[package]]
 name = "moonglass"
-version = "0.1.2"
+version = "0.2.0"
 dependencies = [
- "gpui-kit",
+ "gpui-base",
+ "gpui-pre",
+ "gpui-pre-platform",
+ "gpui-pre-web",
  "tracing",
 ]
 

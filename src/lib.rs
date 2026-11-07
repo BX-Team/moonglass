@@ -17,7 +17,12 @@ mod tabs;
 pub mod theme;
 pub mod toast;
 
-pub use gpui_kit;
+pub use gpui;
+pub use gpui_base as base;
+#[cfg(not(any(target_os = "ios", target_os = "android")))]
+pub use gpui_platform as platform;
+#[cfg(target_family = "wasm")]
+pub use gpui_web as web;
 
 /// This crate's version, for an About page.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -38,19 +43,42 @@ pub use switch::Switch;
 pub use tabs::Tabs;
 pub use theme::{ActiveTheme, Palette, ThemeMode};
 
-pub use gpui_kit::base::{h_flex, v_flex};
+pub use gpui_base::{h_flex, v_flex};
 
-use gpui_kit::base::{Scrollbar, ScrollbarHandle};
-use gpui_kit::{
-    AnyView, App, AppContext as _, Context, Div, FontWeight, Global, IntoElement,
-    ParentElement as _, Render, ScrollHandle, SharedString, StatefulInteractiveElement, Styled,
-    Window, div, px, relative,
+use gpui::{
+    AnyView, AnyWindowHandle, App, AppContext as _, Context, Div, Entity, FontWeight, Global,
+    IntoElement, ParentElement as _, Render, ScrollHandle, SharedString,
+    StatefulInteractiveElement, Styled, Window, WindowOptions, div, px, relative,
 };
+use gpui_base::{Scrollbar, ScrollbarHandle};
 
-/// Sets up the theme and the default labels; call once before opening a window.
+/// The desktop or web application; its platform comes with moonglass.
+#[cfg(not(any(target_os = "ios", target_os = "android")))]
+pub fn application() -> gpui::Application {
+    gpui_platform::application()
+}
+
+/// Sets up GPUI Base, the theme and the default labels; call once before opening a window.
 pub fn init(cx: &mut App) {
+    gpui_base::init(cx);
     theme::init(cx);
     cx.set_global(Labels::default());
+}
+
+/// Opens a window with GPUI Base's root around the view `build` returns, and gives back both.
+pub fn open_window<V: Render>(
+    options: WindowOptions,
+    cx: &mut App,
+    build: impl FnOnce(&mut Window, &mut App) -> Entity<V>,
+) -> gpui::Result<(AnyWindowHandle, Entity<V>)> {
+    let mut built = None;
+    let window = cx.open_window(options, |window, cx| {
+        let view = build(window, cx);
+        built = Some(view.clone());
+        cx.new(|cx| gpui_base::Root::new(view, window, cx))
+    })?;
+    let view = built.expect("open_window ran its build closure");
+    Ok((window.into(), view))
 }
 
 /// The few words the components show on their own, in the app's language.
@@ -101,7 +129,7 @@ struct Tip(SharedString);
 impl Render for Tip {
     fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let c = cx.theme().colors;
-        let tip = gpui_kit::base::Tooltip::new("tip")
+        let tip = gpui_base::Tooltip::new("tip")
             .ui_text(cx)
             .px(px(8.))
             .py(px(4.))
@@ -125,7 +153,7 @@ pub fn tooltip(text: SharedString) -> impl Fn(&mut Window, &mut App) -> AnyView 
 }
 
 /// An avatar-like square with a few letters: instance tiles, account icons.
-pub fn tile(text: SharedString, size: f32, radius: f32, cx: &App) -> gpui_kit::Div {
+pub fn tile(text: SharedString, size: f32, radius: f32, cx: &App) -> gpui::Div {
     let c = cx.theme().colors;
     div()
         .size(px(size))

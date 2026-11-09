@@ -14,7 +14,7 @@ It is the look shared by [Riven](https://github.com/BX-Team/Riven) and [Nyx](htt
 ```toml
 [dependencies]
 moonglass = "0.2"
-gpui = { package = "gpui-pre", version = "=0.3.11" }
+gpui = { package = "gpui-pre", version = "=0.3.12" }
 ```
 
 gpui is published on crates.io as `gpui-pre` snapshots; keep the app's pin equal to moonglass's.

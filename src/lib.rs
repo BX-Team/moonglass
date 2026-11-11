@@ -46,8 +46,8 @@ pub use theme::{ActiveTheme, Palette, ThemeMode};
 pub use gpui_base::{h_flex, v_flex};
 
 use gpui::{
-    AnyView, AnyWindowHandle, App, AppContext as _, Context, Div, Entity, FontWeight, Global,
-    IntoElement, ParentElement as _, Render, ScrollHandle, SharedString,
+    AnyView, AnyWindowHandle, App, AppContext as _, Axis, Context, Div, Entity, FontWeight, Global,
+    InteractiveElement as _, IntoElement, ParentElement as _, Render, ScrollHandle, SharedString,
     StatefulInteractiveElement, Styled, Window, WindowOptions, div, px, relative,
 };
 use gpui_base::{Scrollbar, ScrollbarHandle};
@@ -185,17 +185,39 @@ impl<T: StatefulInteractiveElement> ContainScroll for T {}
 /// A vertical scrollbar laid over a scrolling element; place it in a `relative` parent.
 #[track_caller]
 pub fn scrollbar<H: ScrollbarHandle + Clone>(handle: &H) -> Div {
-    div()
-        .absolute()
-        .inset_0()
-        .child(Scrollbar::vertical(handle).viewport_from_layout())
+    scrollbar_overlay(handle, Scrollbar::vertical(handle), &[Axis::Vertical])
 }
 
 /// Vertical and horizontal scrollbars laid over a scrolling element.
 #[track_caller]
 pub fn scrollbars<H: ScrollbarHandle + Clone>(handle: &H) -> Div {
+    scrollbar_overlay(
+        handle,
+        Scrollbar::new(handle),
+        &[Axis::Vertical, Axis::Horizontal],
+    )
+}
+
+/// Lays `bar` over its element, keeping the pointer off the content under each track that scrolls.
+pub fn scrollbar_overlay<H: ScrollbarHandle>(handle: &H, bar: Scrollbar, axes: &[Axis]) -> Div {
+    let view = handle.viewport_bounds().size;
+    let content = handle.content_size();
+    let guard = |axis: Axis| {
+        let track = div().absolute().block_mouse_except_scroll();
+        match axis {
+            Axis::Vertical => track.top_0().bottom_0().right_0().w(Scrollbar::width()),
+            Axis::Horizontal => track.left_0().right_0().bottom_0().h(Scrollbar::width()),
+        }
+    };
     div()
         .absolute()
         .inset_0()
-        .child(Scrollbar::new(handle).viewport_from_layout())
+        .children(axes.iter().copied().filter_map(|axis| {
+            let overflows = match axis {
+                Axis::Vertical => content.height > view.height,
+                Axis::Horizontal => content.width > view.width,
+            };
+            overflows.then(|| guard(axis))
+        }))
+        .child(bar.viewport_from_layout())
 }

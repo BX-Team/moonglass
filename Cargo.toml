@@ -1,6 +1,6 @@
 [package]
 name = "moonglass"
-version = "0.2.1"
+version = "0.2.2"
 description = "BX Team's design system for gpui: themes, window chrome and components on gpui and GPUI Base"
 authors = ["BX Team"]
 edition = "2024"

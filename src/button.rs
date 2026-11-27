@@ -268,11 +268,7 @@ impl RenderOnce for Button {
             })
             .when(self.disabled, |b| b.opacity(0.5))
             .when(self.loading, |b| {
-                b.child(motion::spinner(
-                    SharedString::from(format!("{key}:spin")),
-                    icon(IconName::Loader, fg),
-                    cx,
-                ))
+                b.child(motion::spinner(icon(IconName::Loader, fg), cx))
             })
             .focus_visible(|s| s.border_1().border_color(c.accent))
             .when_some(self.tooltip, |b, t| b.tooltip(tooltip(t)))

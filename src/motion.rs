@@ -4,7 +4,7 @@ use gpui::prelude::FluentBuilder as _;
 use gpui::{
     Animation, AnimationExt as _, AnyElement, App, Bounds, Div, ElementId, Entity, EntityId,
     IntoElement, ParentElement as _, Pixels, SharedString, StatefulInteractiveElement, Styled, Svg,
-    Transformation, Window, div, ease_out_quint, percentage, px,
+    TimedTransformation, Transformation, Window, div, ease_out_quint, percentage, px,
 };
 use gpui_base::{Interpolate, Presence, PresencePhase, Transition, transition};
 
@@ -148,16 +148,15 @@ pub fn cascade(since: Option<Instant>, ix: usize, window: &mut Window, cx: &App)
     ease_out_quint()(t)
 }
 
-/// A loading indicator: an arc that turns while motion is allowed.
-pub fn spinner(id: impl Into<ElementId>, icon: Svg, cx: &App) -> AnyElement {
+/// A loading indicator: an arc that turns while motion is allowed, without rendering its view again.
+pub fn spinner(icon: Svg, cx: &App) -> AnyElement {
     if cx.reduce_motion() {
         return icon.into_any_element();
     }
-    icon.with_animation(
-        id,
-        Animation::new(Duration::from_millis(900)).repeat(),
-        |svg, t| svg.with_transformation(Transformation::rotate(percentage(t))),
-    )
+    icon.with_timed_transformation(TimedTransformation::rotation(
+        Duration::from_millis(900),
+        Transformation::default(),
+    ))
     .into_any_element()
 }
 
